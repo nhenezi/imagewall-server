@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 12, 2012 at 09:46 PM
+-- Generation Time: Dec 12, 2012 at 09:57 PM
 -- Server version: 5.5.28
 -- PHP Version: 5.4.6-1ubuntu1.1
 
@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Table structure for table `event`
 --
 
-CREATE TABLE IF NOT EXISTS `events` (
+CREATE TABLE IF NOT EXISTS `event` (
   `id` int(13) NOT NULL,
   `prefix` int(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
