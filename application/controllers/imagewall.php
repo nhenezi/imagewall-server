@@ -2,28 +2,30 @@
 
 class Imagewall extends CI_Controller{
 
-  function __construct()
+  public function __construct()
 	{
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
+  	$this->load->model('mymodel');
 	}
 
-  function index()
+  public function index()
   {
-    $this->load->view('imagewall_site', array('error' => ' ','value' => 'HELLOOOOOOOOO' ));
+    $this->load->view('imagewall_site', array('error' => ' ','value' => 'HELLOOOOOOOOO','data' => array() ));
   }
   
-  function loadWithPrefix($prefix = NULL)
+  public function loadWithPrefix($prefix = NULL)
   {
     if ($prefix == NULL)
     {
-      $error = array('error' => "No prefix",'value' => '');
-			$this->load->view('imagewall_site', $error);
+      $data = $this->mymodel->get_all();
+      $query = array('error' => "No prefix",'value' =>"",'data' => $data );
+			$this->load->view('imagewall_site', $query);
     }
     else
-    { // napravit citanje iz baze prema zadanom prefiksu
-       $error = array('error' => "",'value' => 'ipak proslo');
-			$this->load->view('imagewall_site', $error);
+    { 
+        $data = $this->mymodel->get_by_prefix($prefix);
+        $this->load->view('imagewall_site', array('error' => ' ','value'=>' ' ,'data' => $data ));
     }
   }
 }
