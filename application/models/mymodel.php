@@ -45,12 +45,11 @@ class Mymodel extends CI_Model{
   
   public function get_latest_news($id, $limit)
   {
-    $data = $this->db->get_where('picture',array('id' => $id),1);
-    if(! empty($data))
+    if(! empty($this->db->get_where('picture',array('id' => $id))->result()[0]))
     {
       $this->db->select('*');
       $this->db->from('picture');
-      $this->db->where('time >', $data->result()[0]->time);
+      $this->db->where('id >=',$id);
       $this->db->limit($limit);
       $query = $this->db->get();
       
