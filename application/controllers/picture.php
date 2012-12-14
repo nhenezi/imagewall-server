@@ -30,7 +30,7 @@ class Picture extends CI_Controller{
   }
   public function getLatest($id, $limit)
   {
-    $data = json_encode($this->mymodel->get_latest_news($id, $limit),JSON_UNESCAPED_SLASHES);
+    $data = str_replace('\\/', '/',json_encode($this->mymodel->get_latest_news($id, $limit)));
     $this->output
     ->set_content_type('application/json')
     ->set_output($data);
