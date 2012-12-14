@@ -7,7 +7,6 @@ echo $error;
 echo $value;
 ?>
 <h3>Lista</h3>
-<li><img src="<?php echo base_url().IMAGES."2.jpg";?>"></li>
 <ul>
 <?php foreach ($data as $dat):?>
 <li><img src="<?php echo base_url().IMAGES."{$dat->id}.{$dat->extension}";?>"></li>
