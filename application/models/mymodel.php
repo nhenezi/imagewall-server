@@ -45,20 +45,16 @@ class Mymodel extends CI_Model{
   
   public function get_latest_news($id, $limit)
   {
-    if(! empty($this->db->get_where('picture',array('id' => $id))->result()[0]))
-    {
-      $this->db->select('*');
-      $this->db->from('picture');
-      $this->db->where('id >=',$id);
-      $this->db->limit($limit);
-      $query = $this->db->get();
+    $this->db->select('*');
+    $this->db->from('picture');
+    $this->db->where('id >', $id);
+    $this->db->limit($limit);
+    $query = $this->db->get();
       
-      foreach ($query->result() as $row) {
-        $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
-      }
-      return $query->result();
+    foreach ($query->result() as $row) {
+      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
     }
-    return array();
+    return $query->result();
   }
   
   public function upload_image($data)
