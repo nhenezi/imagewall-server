@@ -14,6 +14,10 @@ class Mymodel extends CI_Model{
     $this->db->join('event', 'picture.id = event.id');
     $query = $this->db->get();  
     
+    foreach ($query->result() as $row) {
+      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
+    }
+    
     return $query->result();
   }
   
@@ -31,28 +35,33 @@ class Mymodel extends CI_Model{
       $this->db->join('event', 'picture.id = event.id');
       $query = $this->db->get();  
     }
+    
+    foreach ($query->result() as $row) {
+      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
+    }
+    
     return $query->result();
   }
   
   public function get_latest_news($id, $limit)
   {
-    $data = $this->db->get_where('picture',array('id' => $id));
+    $data = $this->db->get_where('picture',array('id' => $id),1);
     if(! empty($data))
     {
-      $pom=$data->result();
       $this->db->select('*');
       $this->db->from('picture');
-      $this->db->where('time <=', $pom[0]->time);
+      $this->db->where('time <=', $data->result()[0]->time);
       $this->db->limit($limit);
       $query = $this->db->get();
+      
+      foreach ($query->result() as $row) {
+        $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
+      }
+      return $query->result();
     }
-    foreach ($query->result() as $row) {
-      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
-    }
-    return $query->result();
+    return array();
   }
 }
-
 
 ?>
 
