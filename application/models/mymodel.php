@@ -19,7 +19,19 @@ class Mymodel extends CI_Model{
   
   public function get_by_prefix($prefix = NULL)
   {
-    $query = $this->db->get_where('event', array('prefix' => $prefix));
+    if($prefix == NULL)
+    {
+      $this->get_all(); 
+    }
+    else
+    {
+    $this->db->select('*');
+    $this->db->from('picture');
+    $this->db->where('event.prefix',$prefix);
+    $this->db->join('event', 'picture.id = event.id');
+    $query = $this->db->get();  
+    }
+    
     return $query->result();
   }
 }
