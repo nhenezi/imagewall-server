@@ -46,6 +46,9 @@ class Mymodel extends CI_Model{
       $this->db->limit($limit);
       $query = $this->db->get();
     }
+    foreach ($query->result() as $row) {
+      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
+    }
     return $query->result();
   }
 }

@@ -28,9 +28,9 @@ class Picture extends CI_Controller{
       $this->load->view('imagewall_site', array('error' => ' ','value'=>' ' ,'data' => $data ));
     }
   }
-  public function getLatestNews($id, $limit)
+  public function getLatest($id, $limit)
   {
-    $data = json_encode($this->mymodel->get_latest_news($id, $limit));
+    $data = json_encode($this->mymodel->get_latest_news($id, $limit),JSON_UNESCAPED_SLASHES);
     $this->output
     ->set_content_type('application/json')
     ->set_output($data);
