@@ -25,13 +25,27 @@ class Mymodel extends CI_Model{
     }
     else
     {
-    $this->db->select('*');
-    $this->db->from('picture');
-    $this->db->where('event.prefix',$prefix);
-    $this->db->join('event', 'picture.id = event.id');
-    $query = $this->db->get();  
+      $this->db->select('*');
+      $this->db->from('picture');
+      $this->db->where('event.prefix =',$prefix);
+      $this->db->join('event', 'picture.id = event.id');
+      $query = $this->db->get();  
     }
-    
+    return $query->result();
+  }
+  
+  public function get_latest_news($id, $limit)
+  {
+    $data = $this->db->get_where('picture',array('id' => $id));
+    if(! empty($data))
+    {
+      $pom=$data->result();
+      $this->db->select('*');
+      $this->db->from('picture');
+      $this->db->where('time <=', $pom[0]->time);
+      $this->db->limit($limit);
+      $query = $this->db->get();
+    }
     return $query->result();
   }
 }
