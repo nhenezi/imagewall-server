@@ -19,17 +19,11 @@ class Upload extends CI_Controller {
    */
   function uploadImage()
   {
-    $config['upload_path'] = './images/';
+    $config['upload_path'] = 'static/images';
+    var_dump($config['upload_path']);
     $config['allowed_types'] = 'gif|jpg|png';
-    $config['max_size']	= '100';
-    $config['max_width']  = '1024';
-    $config['max_height']  = '768';
     $this->load->library('upload', $config);
-    var_dump($this->upload->data());
-    var_dump($_POST);
-    var_dump($_FILES);
 
-/*
     if (!$this->upload->do_upload())
     {
       $error = array('error' => $this->upload->display_errors());
@@ -37,9 +31,12 @@ class Upload extends CI_Controller {
     }
     else
     {
+      $error = array('error' => $this->upload->display_errors());
       $data = array('upload_data' => $this->upload->data());
-      $this->load->view('upload_success', $data);
-    }*/
+      var_dump($data);
+      $this->load->view('upload_form', array('data' => $data,
+                                             'error' => ''));
+    }
   }
 }
 ?>
