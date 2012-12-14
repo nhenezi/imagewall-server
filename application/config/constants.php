@@ -43,7 +43,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 | 
 |
 */
-
+#define('WIDTH', 50)
 define('STATIC', 'static/');
 define('IMAGES', constant('STATIC').'images/');
 

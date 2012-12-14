@@ -50,7 +50,7 @@ class Mymodel extends CI_Model{
     {
       $this->db->select('*');
       $this->db->from('picture');
-      $this->db->where('time <=', $data->result()[0]->time);
+      $this->db->where('time >=', $data->result()[0]->time);
       $this->db->limit($limit);
       $query = $this->db->get();
       
@@ -60,6 +60,11 @@ class Mymodel extends CI_Model{
       return $query->result();
     }
     return array();
+  }
+  
+  public function upload_image($data)
+  {
+    
   }
 }
 

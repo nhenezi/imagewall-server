@@ -6,6 +6,7 @@ class Upload extends CI_Controller {
   {
     parent::__construct();
     $this->load->helper(array('form', 'url'));
+    $this->load->model('mymodel');
   }
 
   function index()
@@ -36,6 +37,7 @@ class Upload extends CI_Controller {
       var_dump($data);
       $this->load->view('upload_form', array('data' => $data,
                                              'error' => ''));
+      $this->mymodel->upload_image($data);
     }
   }
 }
