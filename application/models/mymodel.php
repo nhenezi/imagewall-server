@@ -1,68 +1,64 @@
 <?php
 
-class Mymodel extends CI_Model{  
-  
+class Mymodel extends CI_Model{
+
   public function __construct()
   {
     parent::__construct();
   }
-  
+
+  private function prepareResult($result) {
+    foreach ($result as $row) {
+      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
+    }
+    return $result;
+  }
+
   public function get_all()
   {
     $this->db->select('*');
     $this->db->from('picture');
     $this->db->join('event', 'picture.id = event.id');
-    $query = $this->db->get();  
-    
-    foreach ($query->result() as $row) {
-      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
-    }
-    
-    return $query->result();
+    $query = $this->db->get();
+
+    return $this->prepareResult($query->result());
   }
-  
+
   public function get_by_prefix($prefix = NULL)
   {
     if($prefix == NULL)
     {
-      $this->get_all(); 
+      $this->get_all();
     }
     else
     {
-      $this->db->select('*');
-      $this->db->from('picture');
-      $this->db->where('event.prefix =',$prefix);
+      $this->db->select('*')->from('picture')->where('event.prefix =', $prefix);
       $this->db->join('event', 'picture.id = event.id');
-      $query = $this->db->get();  
+      $query = $this->db->get();
     }
-    
-    foreach ($query->result() as $row) {
-      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
-    }
-    
-    return $query->result();
+
+    return $this->prepareResult($query->result());
   }
-  
-  public function get_latest_news($id, $limit)
+
+  public function get_latest($limit)
   {
-    $this->db->select('*');
-    $this->db->from('picture');
-    $this->db->where('id >', $id);
-    $this->db->limit($limit);
+    $this->db->select('*')->from('picture')
+      ->order_by('id', 'desc')->limit($limit);
     $query = $this->db->get();
-      
-    foreach ($query->result() as $row) {
-      $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
-    }
-    return $query->result();
+
+    return $this->prepareResult($query->result());
   }
-  
+
+  public function get_after($id, $limit)
+  {
+    $this->db->select('*')->from('picture')->where('id <', $id)->limit($limit);
+    $query = $this->db->get();
+
+    return $this->prepareResult($query->result());
+  }
+
   public function upload_image($data)
   {
-    
+
   }
 }
-
-?>
-
-
