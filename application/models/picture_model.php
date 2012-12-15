@@ -1,6 +1,6 @@
 <?php
 
-class Mymodel extends CI_Model{
+class Picture_model extends CI_Model{
 
   public function __construct()
   {
@@ -8,7 +8,7 @@ class Mymodel extends CI_Model{
   }
 
   /**
-   * Modifies query results to fit our needs
+p   * Modifies query results to fit our needs
    *
    * Adds following virtual properties:
    *  - $path string path to image
@@ -16,7 +16,7 @@ class Mymodel extends CI_Model{
    * @param $result instance of $query->result()
    * @return instance of $query->result()
    */
-  private function prepareResult($result) {
+  private function prepare_result($result) {
     foreach ($result as $row) {
       $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
     }
@@ -33,7 +33,7 @@ class Mymodel extends CI_Model{
     $this->db->join('event', 'picture.id = event.id');
     $query = $this->db->get();
 
-    return $this->prepareResult($query->result());
+    return $this->prepare_result($query->result());
   }
 
   /**
@@ -54,7 +54,7 @@ class Mymodel extends CI_Model{
       $query = $this->db->get();
     }
 
-    return $this->prepareResult($query->result());
+    return $this->prepare_result($query->result());
   }
 
   /**
@@ -68,7 +68,21 @@ class Mymodel extends CI_Model{
       ->order_by('id', 'desc')->limit($limit);
     $query = $this->db->get();
 
-    return $this->prepareResult($query->result());
+    return $this->prepare_result($query->result());
+  }
+
+  /**
+   * Returns $limit pictures before (as uploaded before) $id
+   *
+   * @param  $id starting id
+   * @params $limit number of pictures to return
+   */
+  public function get_before($id, $limit)
+  {
+    $this->db->select('*')->from('picture')->where('id <', $id)
+      ->order_by('id', 'desc')->limit($limit);
+    $query = $this->db->get();
+    return $this->prepare_result($query->result());
   }
 
   /**
@@ -79,11 +93,12 @@ class Mymodel extends CI_Model{
    */
   public function get_after($id, $limit)
   {
-    $this->db->select('*')->from('picture')->where('id <', $id)
+    $this->db->select('*')->from('picture')->where('id >', $id)
       ->order_by('id', 'desc')->limit($limit);
     $query = $this->db->get();
-    return $this->prepareResult($query->result());
+    return $this->prepare_result($query->result());
   }
+
 
   public function upload_image($data)
   {

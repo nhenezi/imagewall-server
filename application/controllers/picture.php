@@ -13,7 +13,7 @@ class Picture extends CI_Controller{
   {
     parent::__construct();
     $this->load->helper(array('form', 'url'));
-    $this->load->model('mymodel');
+    $this->load->model('picture_model');
     $this->output->set_content_type('application/json');
   }
 
@@ -27,11 +27,11 @@ class Picture extends CI_Controller{
   {
     if ($prefix == NULL)
     {
-      $this->output->set_output(json_encode($this->mymodel->get_all()));
+      $this->output->set_output(json_encode($this->picture_model->get_all()));
     }
     else
     {
-      $this->output->set_output(json_encode($this->mymodel->get_by_prefix($prefix)));
+      $this->output->set_output(json_encode($this->picture_model->get_by_prefix($prefix)));
     }
   }
 
@@ -42,7 +42,7 @@ class Picture extends CI_Controller{
    * @param $limit in number of pictures to return
    */
   public function getLatest($limit) {
-    $this->output->set_output(json_encode($this->mymodel->get_latest($limit)));
+    $this->output->set_output(json_encode($this->picture_model->get_latest($limit)));
   }
   
   /**
@@ -54,8 +54,20 @@ class Picture extends CI_Controller{
    */
   public function getBefore($id, $limit)
   {
-    $this->output->set_output(json_encode($this->mymodel->get_after($id, $limit)));
+    $this->output->set_output(json_encode($this->picture_model->get_before($id, $limit)));
   }
+
+  /**
+   * Returns $limit pictures after (as uploaded after) $id
+   * /picture/:id/:limit
+   *
+   * @param  $id starting id
+   * @params $limit number of pictures to return
+   */
+  public function getAfter($id, $limit)
+  {
+    $this->output->set_output(json_encode($this->picture_model->get_after($id, $limit)));
+  }
+
 }
 
-?>
