@@ -7,6 +7,15 @@ class Mymodel extends CI_Model{
     parent::__construct();
   }
 
+  /**
+   * Modifies query results to fit our needs
+   *
+   * Adds following virtual properties:
+   *  - $path string path to image
+   *
+   * @param $result instance of $query->result()
+   * @return instance of $query->result()
+   */
   private function prepareResult($result) {
     foreach ($result as $row) {
       $row->path = base_url().IMAGES.$row->id.'.'.$row->extension;
@@ -14,6 +23,9 @@ class Mymodel extends CI_Model{
     return $result;
   }
 
+  /**
+   * Returns all pictures with a specified prefix
+   */
   public function get_all()
   {
     $this->db->select('*');
@@ -24,6 +36,11 @@ class Mymodel extends CI_Model{
     return $this->prepareResult($query->result());
   }
 
+  /**
+   * Returns all pictures with a specified prefix
+   *
+   * @param $prefix picture prefix
+   */
   public function get_by_prefix($prefix = NULL)
   {
     if($prefix == NULL)
@@ -40,6 +57,11 @@ class Mymodel extends CI_Model{
     return $this->prepareResult($query->result());
   }
 
+  /**
+   * Returns latests pictures (based on id)
+   *
+   * @param $limit in number of pictures to return
+   */
   public function get_latest($limit)
   {
     $this->db->select('*')->from('picture')
@@ -49,6 +71,12 @@ class Mymodel extends CI_Model{
     return $this->prepareResult($query->result());
   }
 
+  /**
+   * Returns $limit pictures before (as uploaded before) $id
+   *
+   * @param  $id starting id
+   * @params $limit number of pictures to return
+   */
   public function get_after($id, $limit)
   {
     $this->db->select('*')->from('picture')->where('id <', $id)
