@@ -51,9 +51,9 @@ class Mymodel extends CI_Model{
 
   public function get_after($id, $limit)
   {
-    $this->db->select('*')->from('picture')->where('id <', $id)->limit($limit);
+    $this->db->select('*')->from('picture')->where('id <', $id)
+      ->order_by('id', 'desc')->limit($limit);
     $query = $this->db->get();
-
     return $this->prepareResult($query->result());
   }
 
