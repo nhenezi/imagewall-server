@@ -52,7 +52,7 @@ class Picture extends CI_Controller{
    * @param  $id starting id
    * @params $limit number of pictures to return
    */
-  public function getAfter($id, $limit)
+  public function getBefore($id, $limit)
   {
     $this->output->set_output(json_encode($this->mymodel->get_after($id, $limit)));
   }
