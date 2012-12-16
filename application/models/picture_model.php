@@ -25,6 +25,19 @@ class Picture_model extends CI_Model{
   }
 
   /**
+   * filters by tag
+   *
+   */
+  private function where_tag($tag) {
+    if ($tag !== '')
+    {
+      //@TODO sanitize input
+      $this->db->join('tag', 'picture.tagId = tag.id')->where('tag.name', $tag);
+    }
+    return $this->db;
+  }
+
+  /**
    * Resize picture
    * Creates image in a smaller size in the file where is the original
    *
@@ -49,34 +62,13 @@ class Picture_model extends CI_Model{
 
   /**
    * Returns all pictures
-   */
-  public function get_all()
-  {
-    $this->db->select('*');
-    $this->db->from('picture');
-    $this->db->join('tag', 'picture.tagId = tag.id');
-    $query = $this->db->get();
-
-    return $this->prepare_result($query->result());
-  }
-
-  /**
-   * Returns all pictures with a specified prefix
    *
-   * @param $prefix picture prefix
+   * @param $tag filter by tag
    */
-  public function get_by_prefix($prefix = NULL, $limit = 99)
+  public function get_all($tag)
   {
-    if($prefix == NULL)
-    {
-      $this->get_all();
-    }
-    else
-    {
-      $this->db->select('*')->from('picture')->join('tag', 'picture.tagId = tag.id');
-      $this->db->order_by('picture.id', 'desc')->limit($limit);
-      $query = $this->db->get();
-    }
+    $this->db->select('*')->from('picture');
+    $query = $this->where_tag($tag)->get();
 
     return $this->prepare_result($query->result());
   }
@@ -86,25 +78,10 @@ class Picture_model extends CI_Model{
    *
    * @param $limit in number of pictures to return
    */
-  public function get_latest($limit)
+  public function get_latest($limit, $tag)
   {
-    $this->db->select('*')->from('picture')
-      ->order_by('id', 'desc')->limit($limit);
-    $query = $this->db->get();
-
-    return $this->prepare_result($query->result());
-  }
-
-  /**
-   * Returns $limit pictures before (as uploaded before) $id
-   *
-   * @param  $id starting id
-   * @params $limit number of pictures to return
-   */
-  public function get_before($id, $limit)
-  {
-    $this->db->select('*')->from('picture')->where('id <', $id)
-      ->order_by('id', 'desc')->limit($limit);
+    $this->db->select('picture.id, picture.name, extension, tagId')->from('picture');
+    $this->where_tag($tag)->order_by('picture.id', 'desc')->limit($limit);
     $query = $this->db->get();
     return $this->prepare_result($query->result());
   }
@@ -115,10 +92,25 @@ class Picture_model extends CI_Model{
    * @param  $id starting id
    * @params $limit number of pictures to return
    */
-  public function get_after($id, $limit)
+  public function get_before($id, $limit, $tag)
   {
-    $this->db->select('*')->from('picture')->where('id >', $id)
-      ->order_by('id', 'asc')->limit($limit);
+    $this->db->select('picture.id, picture.name, extension, tagId')->from('picture');
+    $this->where_tag($tag)->where('picture.id <', $id)->order_by('picture.id', 'desc')->limit($limit);
+    $query = $this->db->get();
+    var_dump($query);
+    return $this->prepare_result($query->result());
+  }
+
+  /**
+   * Returns $limit pictures before (as uploaded before) $id
+   *
+   * @param  $id starting id
+   * @params $limit number of pictures to return
+   */
+  public function get_after($id, $limit, $tag)
+  {
+    $this->db->select('picture.id, picture.name, extension, tagId')->from('picture');
+    $this->where_tag($tag)->where('picture.id >', $id)->order_by('picture.id', 'asc')->limit($limit);
     $query = $this->db->get();
     return $this->prepare_result($query->result());
   }

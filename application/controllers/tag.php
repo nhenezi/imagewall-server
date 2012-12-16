@@ -9,6 +9,10 @@ class Tag extends CI_Controller {
     $this->load->model('tag_model');
   }
 
+  function test($x = 0, $y = 0) {
+    $this->output->set_output(json_encode(array($x, $y)));
+  }
+
   /**
    * Returns all events close to current location
    *
@@ -26,7 +30,11 @@ class Tag extends CI_Controller {
       $this->output->set_output(json_encode($this->tag_model->get_close($xcoordinate, $ycoordinate)));
     }
   }
-
+  /**
+   * Returns newest tags
+   *
+   * @param $limit number of tags to return
+   */
   function getNewest($limit = 5)
   {
     $this->output->set_output(json_encode($this->tag_model->get_newest($limit)));
