@@ -137,6 +137,8 @@ class Picture_model extends CI_Model{
     //@TODO  deja vu problem
     $this->db->insert('picture',$picture_data);
     $id = $this->db->insert_id();
+    
+    rename($data['upload_data']['full_path'], $data['upload_data']['file_path'].$id.$data['upload_data']['file_ext']);
 
     $event_data = array('id' => $id,
                         'prefix' => $data['event']);
