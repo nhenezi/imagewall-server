@@ -5,10 +5,11 @@ class Picture_model extends CI_Model{
   public function __construct()
   {
     parent::__construct();
+    $this->load->library('image_lib');
   }
 
   /**
-p   * Modifies query results to fit our needs
+   * Modifies query results to fit our needs
    *
    * Adds following virtual properties:
    *  - $path string path to image
@@ -22,7 +23,30 @@ p   * Modifies query results to fit our needs
     }
     return $result;
   }
+  
+  /**
+   * Resize picture
+   * Creates image in a smaller size in the file where is the original
+   *
+   * @param $path path to the orginal image
+   */
+  private function resize_image($path)
+  {
+    $config['image_library'] = 'gd2';
+    $config['source_image'] = $path;
+    $config['create_thumb'] = TRUE;
+    $config['maintain_ratio'] = TRUE;
+    $config['width'] = PICTURE_WIDTH;
+    $config['height'] = PICTURE_HEIGHT;
 
+    $this->load->library('image_lib', $config);
+
+    if ( ! $this->image_lib->resize())
+    {
+      var_dump( $this->image_lib->display_errors());
+    } 
+  } 
+  
   /**
    * Returns all pictures with a specified prefix
    */
@@ -99,9 +123,27 @@ p   * Modifies query results to fit our needs
     return $this->prepare_result($query->result());
   }
 
-
+  
+   //@TODO description
   public function upload_image($data)
   {
-
+    //@TODO define $name and $extension with regex
+    $name = substr($data['upload_data']['file_name'],0,
+      strlen($data['upload_data']['orig_name']) - strlen($data['upload_data']['file_ext']));
+    $extension = substr($data['upload_data']['file_ext'], 1, strlen($data['upload_data']['file_ext']));
+      
+    $picture_data = array('name' => $name,
+                          'extension' => $extension);
+    
+    //@TODO  deja vu problem
+    $this->db->insert('picture',$picture_data);
+    $id = $this->db->insert_id();
+    
+    $event_data = array('id' => $id,
+                        'prefix' => $data['event']);
+    
+    $this->db->insert('event',$event_data); 
+     
+    $this->resize_image($data['upload_data']['full_path']);
   }
 }
