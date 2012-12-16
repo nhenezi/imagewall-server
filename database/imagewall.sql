@@ -105,18 +105,8 @@ INSERT INTO `picture` (`id`, `name`, `extension`, `time`) VALUES
 (11, 'janjetina2', 'jpg', '2012-12-14 19:37:35'),
 (12, 'janjetina3', 'jpg', '2012-12-14 19:37:35'),
 (13, 'janjetina4', 'jpg', '2012-12-14 19:37:35'),
-(14, 'zena', 'jpg', '2012-12-14 19:37:35'),
-(15, 'janjetina', 'jpg', '2012-12-14 19:37:35'),
-(47, 'slika', 'jpg', '2012-12-16 10:38:18'),
-(48, 'slika', 'jpg', '2012-12-16 10:38:37'),
-(49, 'slika', 'jpg', '2012-12-16 10:49:42'),
-(50, 'slika', 'jpg', '2012-12-16 10:50:02'),
-(51, 'slika', 'jpg', '2012-12-16 10:50:57'),
-(52, 'slika', 'jpg', '2012-12-16 10:51:28'),
-(53, 'slika', 'jpg', '2012-12-16 10:51:34'),
-(54, 'slika', 'jpg', '2012-12-16 10:52:21'),
-(55, 'slika', 'jpg', '2012-12-16 10:53:07'),
-(56, 'slika', 'jpg', '2012-12-16 12:04:34');
+(14, 'zena', 'jpg', '2012-12-14 19:37:35');
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
