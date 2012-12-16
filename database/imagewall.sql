@@ -71,18 +71,7 @@ INSERT INTO `event` (`id`, `prefix`) VALUES
 (11, 'vecera'),
 (12, 'vecera'),
 (13, 'vecera'),
-(14, 'sajam'),
-(15, 'vecera'),
-(47, 'test'),
-(48, 'test'),
-(49, 'test'),
-(50, 'test'),
-(51, 'test'),
-(52, 'test'),
-(53, 'test'),
-(54, 'test'),
-(55, 'test'),
-(56, 'test');
+(14, 'sajam');
 
 -- --------------------------------------------------------
 
