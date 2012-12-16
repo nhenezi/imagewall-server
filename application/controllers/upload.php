@@ -9,19 +9,6 @@ class Upload extends CI_Controller {
 //    $this->output->set_content_type('application/json');
     $this->load->model('picture_model');
   }
-  
-  //@TODO description
-  function index($xcoordinate = NULL, $ycoordinate = NULL)
-  { 
-    if ($xcoordinate == NULL || $ycoordinate == NULL)
-    {
-       $this->output->set_output(json_encode(array()));
-    }
-    else
-    {
-      $this->output->set_output(json_encode($this->picture_model->get_events($xcoordinate, $ycoordinate)));
-    }
-  }
 
   /**
    * Receives images from client
