@@ -116,22 +116,22 @@ class Picture_model extends CI_Model{
   }
 
   /**
-   * //TODO description
+   * Insert new picture in database and prevents the occurrence of the same image twice
+   * @param $data data about picture,coordinates and tag(event)
   */
   public function upload_image($data)
   { 
     $str = md5_file($data['upload_data']['full_path']);
-    $question = $this->db->get_where('picture',array('md5' => $str))->result();
-    if (empty($question)) // if the picture doese not exist
-    {
-      $name = substr($data['upload_data']['file_name'],0,
-      strlen($data['upload_data']['orig_name']) - strlen($data['upload_data']['file_ext']));
-      $extension = substr($data['upload_data']['file_ext'], 1, strlen($data['upload_data']['file_ext']));
+    $name = substr($data['upload_data']['file_name'],0,
+                    strlen($data['upload_data']['orig_name']) - strlen($data['upload_data']['file_ext']));
+    $extension = substr($data['upload_data']['file_ext'], 1, strlen($data['upload_data']['file_ext']));
+    $tag = $this->db->get_where('tag', array('name' => $data['event']))->result();
     
-      $tag = $this->db->get_where('tag', array('name' => $data['event']))->result();
-      if (!empty($tag))
+    if (!empty($tag))
+    {
+      $question = $this->db->get_where('picture',array('md5' => $str, 'tagId' => $tag[0]->id))->result();
+      if (empty($question)) // if the picture doese not exist
       {
-        var_dump($tag);
         $picture_data = array('name' => $name,
                               'extension' => $extension,
                               'tagId' => $tag[0]->id,
@@ -139,26 +139,27 @@ class Picture_model extends CI_Model{
         $this->db->insert('picture',$picture_data);
         $id = $this->db->insert_id();
       }
-      else
+      else  // if the picture does exist remove upload 
       {
-        $tag_data = array('name' => $data['event'],
-                          'x' => $data['coordinate']['x-coordinate'],
-                          'y' => $data['coordinate']['y-coordinate']);
-        $this->db->insert('tag',$tag_data);
-        $tag_id = $this->db->insert_id();
-        $picture_data = array('name' => $name,
-                              'extension' => $extension,
-                              'tagId' => $tag_id,
-                              'md5' => $str);
-        $this->db->insert('picture',$picture_data);
-        $id = $this->db->insert_id();
-      }   
-      rename($data['upload_data']['full_path'], $data['upload_data']['file_path'].$id.$data['upload_data']['file_ext']);
-      $this->resize_image($data['upload_data']['full_path']);
+        unlink($data['upload_data']['full_path']);
+        return;
+      }
     }
-    else  // if the picture does exist remove upload picture
+    else
     {
-      unlink($data['upload_data']['full_path']);
-    }
+      $tag_data = array('name' => $data['event'],
+                        'x' => $data['coordinate']['x-coordinate'],
+                        'y' => $data['coordinate']['y-coordinate']);
+      $this->db->insert('tag',$tag_data);
+      $tag_id = $this->db->insert_id();
+      $picture_data = array('name' => $name,
+                            'extension' => $extension,
+                            'tagId' => $tag_id,
+                            'md5' => $str);
+      $this->db->insert('picture',$picture_data);
+      $id = $this->db->insert_id();
+    }   
+    rename($data['upload_data']['full_path'], $data['upload_data']['file_path'].$id.$data['upload_data']['file_ext']);
+    $this->resize_image($data['upload_data']['full_path']);
   } 
 }
