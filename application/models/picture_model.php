@@ -117,6 +117,7 @@ class Picture_model extends CI_Model{
 
   /**
    * Insert new picture in database and prevents the occurrence of the same image twice
+   *
    * @param $data data about picture,coordinates and tag(event)
   */
   public function upload_image($data)
