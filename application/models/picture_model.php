@@ -118,7 +118,6 @@ class Picture_model extends CI_Model{
    //@TODO description
   public function upload_image($data)
   {
-    //@TODO define $name and $extension with regex
     $name = substr($data['upload_data']['file_name'],0,
       strlen($data['upload_data']['orig_name']) - strlen($data['upload_data']['file_ext']));
     $extension = substr($data['upload_data']['file_ext'], 1, strlen($data['upload_data']['file_ext']));

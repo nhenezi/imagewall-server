@@ -6,7 +6,6 @@ class Upload extends CI_Controller {
   {
     parent::__construct();
     $this->load->helper(array('form', 'url'));
-//    $this->output->set_content_type('application/json');
     $this->load->model('picture_model');
   }
 
