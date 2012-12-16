@@ -48,7 +48,7 @@ class Picture_model extends CI_Model{
   } 
   
   /**
-   * Returns all pictures with a specified prefix
+   * Returns all pictures
    */
   public function get_all()
   {
@@ -65,7 +65,7 @@ class Picture_model extends CI_Model{
    *
    * @param $prefix picture prefix
    */
-  public function get_by_prefix($prefix = NULL)
+  public function get_by_prefix($prefix = NULL, $limit = 99)
   {
     if($prefix == NULL)
     {
@@ -74,7 +74,7 @@ class Picture_model extends CI_Model{
     else
     {
       $this->db->select('*')->from('picture')->where('event.prefix =', $prefix);
-      $this->db->join('event', 'picture.id = event.id');
+      $this->db->join('event', 'picture.id = event.id')->order_by('picture.id' 'desc')->limit($limit);
       $query = $this->db->get();
     }
 
