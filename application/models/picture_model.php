@@ -148,16 +148,4 @@ class Picture_model extends CI_Model{
     $this->resize_image($data['upload_data']['full_path']);
   }
   
-  //@TODO description
-  public function get_events($xcoordinate, $ycoordinate)
-  {
-    $query = array('xcoordinate >' => $xcoordinate - 5,
-                   'xcoordinate <' => $xcoordinate + 5,
-                   'ycoordinate >' => $ycoordinate - 5,
-                   'ycoordinate <' => $ycoordinate + 5);
-    
-    $this->db->select('prefix')->from('coordinate')->where($query);
-    $data = $this->db->get();
-    return $data->result();
-  }
 }
