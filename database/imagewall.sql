@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.11.1deb1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 16, 2012 at 02:37 PM
+-- Generation Time: Dec 16, 2012 at 03:10 PM
 -- Server version: 5.5.28
--- PHP Version: 5.4.6-1ubuntu1.1
+-- PHP Version: 5.3.10-1ubuntu3.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,61 +17,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `imagewall`
+-- Database: `bcc`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `coordinate`
---
-
-CREATE TABLE IF NOT EXISTS `coordinate` (
-  `prefix` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `xcoordinate` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `ycoordinate` varchar(255) CHARACTER SET latin1 NOT NULL,
-  PRIMARY KEY (`prefix`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `coordinate`
---
-
-INSERT INTO `coordinate` (`prefix`, `xcoordinate`, `ycoordinate`) VALUES
-('bcc', '0', '0'),
-('estudent', '7', '1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `event`
---
-
-CREATE TABLE IF NOT EXISTS `event` (
-  `id` int(13) NOT NULL,
-  `prefix` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `event`
---
-
-INSERT INTO `event` (`id`, `prefix`) VALUES
-(1, 'Best_Code_Challange'),
-(2, 'Best_Code_Challange'),
-(3, 'Best_Code_Challange'),
-(4, 'estudent'),
-(5, 'estudent'),
-(6, 'sajam'),
-(7, 'sajam'),
-(8, 'sajam'),
-(9, 'sajam'),
-(10, 'vecera'),
-(11, 'vecera'),
-(12, 'vecera'),
-(13, 'vecera'),
-(14, 'sajam');
 
 -- --------------------------------------------------------
 
@@ -79,11 +26,13 @@ INSERT INTO `event` (`id`, `prefix`) VALUES
 -- Table structure for table `picture`
 --
 
+DROP TABLE IF EXISTS `picture`;
 CREATE TABLE IF NOT EXISTS `picture` (
   `id` int(13) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `extension` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tagId` int(13) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=57 ;
 
@@ -91,22 +40,45 @@ CREATE TABLE IF NOT EXISTS `picture` (
 -- Dumping data for table `picture`
 --
 
-INSERT INTO `picture` (`id`, `name`, `extension`, `time`) VALUES
-(1, 'auto1', 'jpeg', '2012-12-13 20:46:45'),
-(2, 'auto2', 'jpg', '2012-12-13 20:46:45'),
-(3, 'auto3', 'jpg', '2012-12-13 20:46:45'),
-(4, 'auto4', 'jpg', '2012-12-13 20:46:45'),
-(5, 'auto5', 'jpg', '2012-12-13 20:46:45'),
-(6, 'zena1', 'jpg', '2012-12-14 19:37:35'),
-(7, 'zena2', 'jpg', '2012-12-14 19:37:35'),
-(8, 'zena3', 'jpg', '2012-12-14 19:37:35'),
-(9, 'zena4', 'jpg', '2012-12-14 19:37:35'),
-(10, 'janjetina1', 'jpg', '2012-12-14 19:37:35'),
-(11, 'janjetina2', 'jpg', '2012-12-14 19:37:35'),
-(12, 'janjetina3', 'jpg', '2012-12-14 19:37:35'),
-(13, 'janjetina4', 'jpg', '2012-12-14 19:37:35'),
-(14, 'zena', 'jpg', '2012-12-14 19:37:35');
+INSERT INTO `picture` (`id`, `name`, `extension`, `time`, `tagId`) VALUES
+(1, 'auto1', 'jpeg', '2012-12-13 20:46:45', 3),
+(2, 'auto2', 'jpg', '2012-12-13 20:46:45', 3),
+(3, 'auto3', 'jpg', '2012-12-13 20:46:45', 3),
+(4, 'auto4', 'jpg', '2012-12-13 20:46:45', 3),
+(5, 'auto5', 'jpg', '2012-12-13 20:46:45', 3),
+(6, 'zena1', 'jpg', '2012-12-14 19:37:35', 2),
+(7, 'zena2', 'jpg', '2012-12-14 19:37:35', 2),
+(8, 'zena3', 'jpg', '2012-12-14 19:37:35', 2),
+(9, 'zena4', 'jpg', '2012-12-14 19:37:35', 2),
+(10, 'janjetina1', 'jpg', '2012-12-14 19:37:35', 2),
+(11, 'janjetina2', 'jpg', '2012-12-14 19:37:35', 1),
+(12, 'janjetina3', 'jpg', '2012-12-14 19:37:35', 1),
+(13, 'janjetina4', 'jpg', '2012-12-14 19:37:35', 1),
+(14, 'zena', 'jpg', '2012-12-14 19:37:35', 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tag`
+--
+
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE IF NOT EXISTS `tag` (
+  `id` int(13) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `x` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `y` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tag`
+--
+
+INSERT INTO `tag` (`id`, `name`, `x`, `y`) VALUES
+(1, 'cars', '3', '3'),
+(2, 'Women', '3', '3'),
+(3, 'stuff', '3', '3');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
