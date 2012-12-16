@@ -29,5 +29,14 @@ class Tag_model extends CI_Model{
     }
     return $arr;
   }
+
+  /**
+   * Returns all events close to current location
+   *
+   * @param $limit number of tags to send
+   */
+  public function get_newest($limit) {
+    return $this->db->select('*')->from('tag')->order_by('id', 'desc')->limit($limit)->get()->result();
+  }
 }
 

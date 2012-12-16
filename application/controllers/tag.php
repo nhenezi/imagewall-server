@@ -9,7 +9,12 @@ class Tag extends CI_Controller {
     $this->load->model('tag_model');
   }
 
-  //@TODO description
+  /**
+   * Returns all events close to current location
+   *
+   * @param xcoordinate
+   * @param ycoordinate
+   */
   function getClose($xcoordinate = NULL, $ycoordinate = NULL)
   { 
     if ($xcoordinate == NULL || $ycoordinate == NULL)
@@ -22,5 +27,8 @@ class Tag extends CI_Controller {
     }
   }
 
-
+  function getNewest($limit = 5)
+  {
+    $this->output->set_output(json_encode($this->tag_model->get_newest($limit)));
+  }
 }
