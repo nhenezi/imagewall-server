@@ -74,7 +74,7 @@ class Picture_model extends CI_Model{
     else
     {
       $this->db->select('*')->from('picture')->where('event.prefix =', $prefix);
-      $this->db->join('event', 'picture.id = event.id')->order_by('picture.id' 'desc')->limit($limit);
+      $this->db->join('event', 'picture.id = event.id')->order_by('picture.id', 'desc')->limit($limit);
       $query = $this->db->get();
     }
 
