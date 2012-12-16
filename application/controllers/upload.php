@@ -6,12 +6,21 @@ class Upload extends CI_Controller {
   {
     parent::__construct();
     $this->load->helper(array('form', 'url'));
+    $this->output->set_content_type('application/json');
     $this->load->model('picture_model');
   }
-
-  function index()
-  {
-    $this->load->view('upload_form', array('error' => ' ' ));
+  
+  //@TODO description
+  function index($xcoordinate = NULL, $ycoordinate = NULL)
+  { 
+    if ($xcoordinate == NULL || $ycoordinate == NULL)
+    {
+       $this->output->set_output(json_encode(array()));
+    }
+    else
+    {
+      $this->output->set_output(json_encode($this->picture_model->get_events($xcoordinate, $ycoordinate)));
+    }
   }
 
   /**

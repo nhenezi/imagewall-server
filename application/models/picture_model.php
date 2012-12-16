@@ -74,7 +74,7 @@ class Picture_model extends CI_Model{
     else
     {
       $this->db->select('*')->from('picture')->where('event.prefix =', $prefix);
-      $this->db->join('event', 'picture.id = event.id')->order_by('picture.id' 'desc')->limit($limit);
+      $this->db->join('event', 'picture.id = event.id')->order_by('picture.id', 'desc')->limit($limit);
       $query = $this->db->get();
     }
 
@@ -145,5 +145,18 @@ class Picture_model extends CI_Model{
     $this->db->insert('event',$event_data); 
      
     $this->resize_image($data['upload_data']['full_path']);
+  }
+  
+  //@TODO description
+  public function get_events($xcoordinate, $ycoordinate)
+  {
+    $query = array('xcoordinate >' => $xcoordinate - 5,
+                   'xcoordinate <' => $xcoordinate + 5,
+                   'ycoordinate >' => $ycoordinate - 5,
+                   'ycoordinate <' => $ycoordinate + 5);
+    
+    $this->db->select('prefix')->from('coordinate')->where($query);
+    $data = $this->db->get();
+    return $data->result();
   }
 }
