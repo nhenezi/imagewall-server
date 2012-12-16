@@ -9,8 +9,15 @@ class Tag extends CI_Controller {
     $this->load->model('tag_model');
   }
 
+  /**
+   * Testing functions for android
+   */
   function test($x = 0, $y = 0) {
     $this->output->set_output(json_encode(array($x, $y)));
+  }
+
+  function testPost() {
+    print_r($_POST);
   }
 
   /**
