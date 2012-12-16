@@ -23,7 +23,7 @@ class Picture_model extends CI_Model{
     }
     return $result;
   }
-  
+
   /**
    * Resize picture
    * Creates image in a smaller size in the file where is the original
@@ -44,9 +44,9 @@ class Picture_model extends CI_Model{
     if ( ! $this->image_lib->resize())
     {
       var_dump( $this->image_lib->display_errors());
-    } 
-  } 
-  
+    }
+  }
+
   /**
    * Returns all pictures
    */
@@ -123,7 +123,7 @@ class Picture_model extends CI_Model{
     return $this->prepare_result($query->result());
   }
 
-  
+
    //@TODO description
   public function upload_image($data)
   {
@@ -131,19 +131,19 @@ class Picture_model extends CI_Model{
     $name = substr($data['upload_data']['file_name'],0,
       strlen($data['upload_data']['orig_name']) - strlen($data['upload_data']['file_ext']));
     $extension = substr($data['upload_data']['file_ext'], 1, strlen($data['upload_data']['file_ext']));
-      
+
     $picture_data = array('name' => $name,
                           'extension' => $extension);
-    
+
     //@TODO  deja vu problem
     $this->db->insert('picture',$picture_data);
     $id = $this->db->insert_id();
-    
+
     $event_data = array('id' => $id,
                         'prefix' => $data['event']);
-    
-    $this->db->insert('event',$event_data); 
-     
+
+    $this->db->insert('event',$event_data);
+
     $this->resize_image($data['upload_data']['full_path']);
   }
 }
