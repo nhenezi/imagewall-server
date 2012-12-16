@@ -41,7 +41,7 @@ class Picture_model extends CI_Model{
 
     $this->load->library('image_lib', $config);
 
-    if ( ! $this->image_lib->resize())
+    if (!$this->image_lib->resize())
     {
       var_dump( $this->image_lib->display_errors());
     }
@@ -54,7 +54,7 @@ class Picture_model extends CI_Model{
   {
     $this->db->select('*');
     $this->db->from('picture');
-    $this->db->join('event', 'picture.id = event.id');
+    $this->db->join('tag', 'picture.tagId = tag.id');
     $query = $this->db->get();
 
     return $this->prepare_result($query->result());
@@ -73,8 +73,8 @@ class Picture_model extends CI_Model{
     }
     else
     {
-      $this->db->select('*')->from('picture')->where('event.prefix =', $prefix);
-      $this->db->join('event', 'picture.id = event.id')->order_by('picture.id', 'desc')->limit($limit);
+      $this->db->select('*')->from('picture')->join('tag', 'picture.tagId = tag.id');
+      $this->db->order_by('picture.id', 'desc')->limit($limit);
       $query = $this->db->get();
     }
 
