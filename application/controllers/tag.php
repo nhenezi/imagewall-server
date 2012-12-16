@@ -18,6 +18,7 @@ class Tag extends CI_Controller {
 
   function testPost() {
     print_r($_POST);
+    print_r($_FILES);
   }
 
   /**
@@ -37,6 +38,7 @@ class Tag extends CI_Controller {
       $this->output->set_output(json_encode($this->tag_model->get_close($xcoordinate, $ycoordinate)));
     }
   }
+
   /**
    * Returns newest tags
    *
@@ -45,5 +47,16 @@ class Tag extends CI_Controller {
   function getNewest($limit = 5)
   {
     $this->output->set_output(json_encode($this->tag_model->get_newest($limit)));
+  }
+
+  /**
+   * Returns newer tags then $id
+   *
+   * @param $id id of latest tag
+   * @param $limit number of tags to return
+   */
+  function getNewer($id, $limit = 5)
+  {
+    $this->output->set_output(json_encode($this->tag_model->get_newer($id, $limit)));
   }
 }

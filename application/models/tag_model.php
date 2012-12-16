@@ -35,8 +35,21 @@ class Tag_model extends CI_Model{
    *
    * @param $limit number of tags to send
    */
-  public function get_newest($limit) {
+  public function get_newest($limit)
+  {
     return $this->db->select('*')->from('tag')->order_by('id', 'desc')->limit($limit)->get()->result();
   }
+
+  /**
+   * Returns newer tags then $id
+   *
+   * @param $id id of latest tag
+   * @param $limit number of tags to return
+   */
+  public function get_newer($id, $limit)
+  {
+    return $this->db->select('*')->from('tag')->where('id >', $id)->order_by('id', 'desc')->limit($limit)->get()->result();
+  }
+
 }
 
