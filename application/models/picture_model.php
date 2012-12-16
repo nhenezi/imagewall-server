@@ -118,11 +118,10 @@ class Picture_model extends CI_Model{
   public function get_after($id, $limit)
   {
     $this->db->select('*')->from('picture')->where('id >', $id)
-      ->order_by('id', 'desc')->limit($limit);
+      ->order_by('id', 'asc')->limit($limit);
     $query = $this->db->get();
     return $this->prepare_result($query->result());
   }
-
 
    //@TODO description
   public function upload_image($data)
