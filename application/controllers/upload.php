@@ -7,6 +7,8 @@ class Upload extends CI_Controller {
     parent::__construct();
     $this->load->helper(array('form', 'url'));
     $this->load->model('picture_model');
+    $this->output->set_header("Access-Control-Allow-Origin: *");
+    $this->output->set_header("Access-Control-Expose-Headers: Access-Control-Allow-Origin");
   }
 
   /**

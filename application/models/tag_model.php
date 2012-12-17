@@ -20,7 +20,6 @@ class Tag_model extends CI_Model{
                    'x <' => $xcoordinate + 5,
                    'y >' => $ycoordinate - 5,
                    'y <' => $ycoordinate + 5);
-    
     $this->db->select('name')->from('tag')->where($query);
     $data = $this->db->get();
     $arr = array();

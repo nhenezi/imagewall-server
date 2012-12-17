@@ -5,8 +5,10 @@ class Tag extends CI_Controller {
   function __construct()
   {
     parent::__construct();
-    $this->output->set_content_type('application/json');
     $this->load->model('tag_model');
+    $this->output->set_header("Access-Control-Allow-Origin: *");
+    $this->output->set_header("Access-Control-Expose-Headers: Access-Control-Allow-Origin");
+    $this->output->set_content_type('application/json');
   }
 
   /**
