@@ -45,13 +45,13 @@ class Picture_model extends CI_Model{
    */
   private function resize_image($path)
   {
-    $re_config['image_library'] = 'gd2';
+    $re_config['image_library'] = 'gd';
     $re_config['source_image'] = $path;
     $re_config['create_thumb'] = TRUE;
     $config['maintain_ratio'] = TRUE;
 //    $config['dynamic_output'] = TRUE;
     $config['width'] = 75;
-//    $config['height'] = 50;
+    $config['height'] = 50;
     $this->load->library('image_lib', $config);
     var_dump($path);
     var_dump($this->image_lib->resize());
