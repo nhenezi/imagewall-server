@@ -94,7 +94,6 @@ class Picture_model extends CI_Model{
     $this->db->select('picture.id, picture.name, extension, tagId')->from('picture');
     $this->where_tag($tag)->where('picture.id <', $id)->order_by('picture.id', 'desc')->limit($limit);
     $query = $this->db->get();
-    var_dump($query);
     return $this->prepare_result($query->result());
   }
 
