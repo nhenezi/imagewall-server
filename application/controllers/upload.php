@@ -14,7 +14,7 @@ class Upload extends CI_Controller {
    * picture, picture_name, coordinates.
    */
   function index()
-  { 
+  {
     $config['upload_path'] = 'static/images';
     $config['allowed_types'] = 'gif|jpg|png';
     $this->load->library('upload', $config);

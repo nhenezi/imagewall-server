@@ -49,10 +49,11 @@ class Picture_model extends CI_Model{
     $re_config['source_image'] = $path;
     $re_config['create_thumb'] = TRUE;
     $config['maintain_ratio'] = TRUE;
-    $config['dynamic_output'] = TRUE;
+//    $config['dynamic_output'] = TRUE;
     $config['width'] = 75;
-    $config['height'] = 50;
+//    $config['height'] = 50;
     $this->load->library('image_lib', $config);
+    var_dump($path);
     var_dump($this->image_lib->resize());
   }
 
@@ -157,7 +158,7 @@ class Picture_model extends CI_Model{
       $id = $this->db->insert_id();
     }   
     rename($data['upload_data']['full_path'], $data['upload_data']['file_path'].$id.$data['upload_data']['file_ext']);
-    $this->resize_image($data['upload_data']['full_path']);
+    $this->resize_image($data['upload_data']['file_path'].$id.$data['upload_data']['file_ext']);
     return "slika ne postoji";
   } 
 }
