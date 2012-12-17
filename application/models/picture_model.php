@@ -46,18 +46,14 @@ class Picture_model extends CI_Model{
   private function resize_image($path)
   {
     $config['image_library'] = 'gd2';
-    $config['source_image'] = $path;
+    $config['source_image'] = '/var/www/bcc/server/static/images/1.jpg';
     $config['create_thumb'] = TRUE;
     $config['maintain_ratio'] = TRUE;
-    $config['width'] = PICTURE_WIDTH;
-    $config['height'] = PICTURE_HEIGHT;
-
+    $config['dynamic_output'] = TRUE;
+    $config['width'] = 75;
+    $config['height'] = 50;
     $this->load->library('image_lib', $config);
-
-    if (!$this->image_lib->resize())
-    {
-      var_dump( $this->image_lib->display_errors());
-    }
+    var_dump($this->image_lib->resize());
   }
 
   /**

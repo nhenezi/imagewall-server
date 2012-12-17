@@ -7,7 +7,7 @@
 <?php echo $error;?>
 <?php echo $db_error;?>
 
-<?php echo form_open_multipart('upload/uploadImage/');?>
+<?php echo form_open_multipart('upload/');?>
 
 <input type="file" name="userfile" size="20" />
 <input type="text" name="tag" />

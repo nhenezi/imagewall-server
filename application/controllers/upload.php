@@ -22,7 +22,7 @@ class Upload extends CI_Controller {
     if (!$this->upload->do_upload())
     {
       $error = array('error' => $this->upload->display_errors(),
-                      'db_error' => '');
+                     'db_error' => '');
       $this->load->view('upload_form', $error);
     }
     else
@@ -30,8 +30,8 @@ class Upload extends CI_Controller {
       $error = $this->upload->display_errors();
       $data = array('upload_data' => $this->upload->data(),
                     'event' => $_POST['tag'],
-                     'coordinate' => array( 'x-coordinate' => $_POST['x'], 
-                                            'y-coordinate' => $_POST['y']));
+                    'coordinate' => array( 'x-coordinate' => $_POST['x'], 
+                                           'y-coordinate' => $_POST['y']));
       var_dump($data);
       $db_error = $this->picture_model->upload_image($data);
       $this->load->view('upload_form', array('db_error' => $db_error,
