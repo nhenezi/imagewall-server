@@ -13,29 +13,29 @@ class Upload extends CI_Controller {
    * Receives images from client
    * picture, picture_name, coordinates.
    */
-  function uploadImage($event = NULL, $xcoordinate = NULL, $ycoordinate = NULL)
+  function uploadImage()
   { 
     $config['upload_path'] = 'static/images';
-    var_dump($config['upload_path']);
     $config['allowed_types'] = 'gif|jpg|png';
     $this->load->library('upload', $config);
 
     if (!$this->upload->do_upload())
     {
-      $error = array('error' => $this->upload->display_errors());
+      $error = array('error' => $this->upload->display_errors(),
+                      'db_error' => '');
       $this->load->view('upload_form', $error);
     }
     else
     {
       $error = $this->upload->display_errors();
       $data = array('upload_data' => $this->upload->data(),
-                    'event' => $event,
-                     'coordinate' => array( 'x-coordinate' => $xcoordinate, 
-                                            'y-coordinate' => $ycoordinate));
+                    'event' => $_POST['tag'],
+                     'coordinate' => array( 'x-coordinate' => $_POST['x'], 
+                                            'y-coordinate' => $_POST['y']));
       var_dump($data);
-      $this->load->view('upload_form', array('data' => $data,
+      $db_error = $this->picture_model->upload_image($data);
+      $this->load->view('upload_form', array('db_error' => $db_error,
                                              'error' => $error));
-      $this->picture_model->upload_image($data);
     }
   }
 }

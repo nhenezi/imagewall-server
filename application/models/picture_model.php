@@ -143,7 +143,7 @@ class Picture_model extends CI_Model{
       else  // if the picture does exist remove upload 
       {
         unlink($data['upload_data']['full_path']);
-        return;
+        return "slika vec postoji";
       }
     }
     else
@@ -162,5 +162,6 @@ class Picture_model extends CI_Model{
     }   
     rename($data['upload_data']['full_path'], $data['upload_data']['file_path'].$id.$data['upload_data']['file_ext']);
     $this->resize_image($data['upload_data']['full_path']);
+    return "slika ne postoji";
   } 
 }
