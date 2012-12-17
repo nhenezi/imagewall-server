@@ -30,7 +30,7 @@ class Upload extends CI_Controller {
       $error = $this->upload->display_errors();
       $data = array('upload_data' => $this->upload->data(),
                     'event' => $_POST['tag'],
-                    'coordinate' => array( 'x-coordinate' => $_POST['x'], 
+                    'coordinate' => array( 'x-coordinate' => $_POST['x'],
                                            'y-coordinate' => $_POST['y']));
       var_dump($data);
       $db_error = $this->picture_model->upload_image($data);
