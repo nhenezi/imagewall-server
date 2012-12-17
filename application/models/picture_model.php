@@ -45,9 +45,9 @@ class Picture_model extends CI_Model{
    */
   private function resize_image($path)
   {
-    $config['image_library'] = 'gd2';
-    $config['source_image'] = '/var/www/bcc/server/static/images/1.jpg';
-    $config['create_thumb'] = TRUE;
+    $re_config['image_library'] = 'gd2';
+    $re_config['source_image'] = $path;
+    $re_config['create_thumb'] = TRUE;
     $config['maintain_ratio'] = TRUE;
     $config['dynamic_output'] = TRUE;
     $config['width'] = 75;
