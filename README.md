@@ -1,4 +1,4 @@
-ImageWall backend. (Live demo)[http://nikola.henezi.com/imagewall/src]
+ImageWall backend. [Live demo](http://nikola.henezi.com/imagewall/src)
 
 Installation instruction:
 * clone/copy git repository
