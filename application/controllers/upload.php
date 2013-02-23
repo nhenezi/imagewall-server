@@ -14,7 +14,7 @@ class Upload extends CI_Controller {
   /**
    * Receives images from client
    * picture, picture_name, coordinates.
-   */
+
   function index()
   {
     $config['upload_path'] = 'static/images';
@@ -40,5 +40,6 @@ class Upload extends CI_Controller {
                                              'error' => $error));
     }
   }
+  */
 }
 ?>
