@@ -1,5 +1,6 @@
 ImageWall backend. [Live demo](http://nikola.henezi.com/imagewall/src)
 
+
 Installation instruction:
 * clone/copy git repository
 * copy application/config/database.example.php to
